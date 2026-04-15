@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Advanced Calculator System with History and Analytics">
+    <title>Advanced Calculator System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode" id="app-body">
+    
+    <div id="toast-container"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-calculator"></i>
+            <h1>CalcPro</h1>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn" id="theme-toggle"><i class="fa-solid fa-sun"></i></button>
+            <span id="user-greeting" class="user-greeting"></span>
+            <button class="nav-btn logout-btn" id="logout-btn" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </nav>
+
+    <main class="dashboard is-hidden" id="dashboard-view">
+        <div class="app-layout">
+            
+            <!-- Calculator Section -->
+            <section class="calculator-section">
+                <div class="calculator glass-panel">
+                    <div class="display">
+                        <div class="expression-preview" id="expression-preview"></div>
+                        <div class="main-display" id="main-display">0</div>
+                    </div>
+                    
+                    <div class="buttons-grid">
+                        <button class="calc-btn utility" data-action="clear">AC</button>
+                        <button class="calc-btn utility" data-action="delete"><i class="fa-solid fa-delete-left"></i></button>
+                        <button class="calc-btn utility" data-action="parentheses">( )</button>
+                        <button class="calc-btn operator" data-value="÷">÷</button>
+
+                        <button class="calc-btn num" data-value="7">7</button>
+                        <button class="calc-btn num" data-value="8">8</button>
+                        <button class="calc-btn num" data-value="9">9</button>
+                        <button class="calc-btn operator" data-value="×">×</button>
+
+                        <button class="calc-btn num" data-value="4">4</button>
+                        <button class="calc-btn num" data-value="5">5</button>
+                        <button class="calc-btn num" data-value="6">6</button>
+                        <button class="calc-btn operator" data-value="-">-</button>
+
+                        <button class="calc-btn num" data-value="1">1</button>
+                        <button class="calc-btn num" data-value="2">2</button>
+                        <button class="calc-btn num" data-value="3">3</button>
+                        <button class="calc-btn operator" data-value="+">+</button>
+
+                        <button class="calc-btn utility" data-action="toggle-sign">±</button>
+                        <button class="calc-btn num" data-value="0">0</button>
+                        <button class="calc-btn num" data-value=".">.</button>
+                        <button class="calc-btn equals" data-action="calculate">=</button>
+                    </div>
+
+                    <!-- Scientific toggle -->
+                    <div class="scientific-toggle" id="sci-toggle">
+                        <span>Scientific</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    
+                    <div class="scientific-grid is-hidden" id="sci-grid">
+                        <button class="calc-btn func" data-value="sin(">sin</button>
+                        <button class="calc-btn func" data-value="cos(">cos</button>
+                        <button class="calc-btn func" data-value="tan(">tan</button>
+                        <button class="calc-btn func" data-value="log(">log</button>
+                        <button class="calc-btn func" data-value="sqrt(">√</button>
+                        <button class="calc-btn func" data-value="^">^</button>
+                        <button class="calc-btn func" data-value="%">%</button>
+                        <button class="calc-btn func" data-value="pi">π</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Sidebar Section (History & Analytics) -->
+            <section class="sidebar-section">
+                <!-- Analytics Panel -->
+                <div class="analytics-panel glass-panel">
+                    <h2><i class="fa-solid fa-chart-line"></i> Activity</h2>
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <span class="stat-label">Total Uses</span>
+                            <span class="stat-value" id="stat-total">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Top Operator</span>
+                            <span class="stat-value" id="stat-operator">-</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- History Panel -->
+                <div class="history-panel glass-panel">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-clock-rotate-left"></i> History</h2>
+                        <button class="export-btn" id="export-btn"><i class="fa-solid fa-download"></i> CSV</button>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <!-- History items will be injected here -->
+                    </div>
+                    <div class="pagination">
+                        <button class="page-btn" id="prev-page" disabled><i class="fa-solid fa-chevron-left"></i></button>
+                        <span id="page-info">1</span>
+                        <button class="page-btn" id="next-page" disabled><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
