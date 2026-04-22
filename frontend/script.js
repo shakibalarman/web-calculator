@@ -220,14 +220,79 @@ function initCalculator() {
         });
     });
 
-    // Keyboard support
+    // Keyboard support - Enhanced with better operator handling
     document.addEventListener("keydown", (e) => {
         const key = e.key;
-        if (/[0-9.]/.test(key)) handleCalculatorInput(null, key);
-        if (["+", "-", "*", "/", "%", "^", "(", ")"].test(key)) handleCalculatorInput(null, key);
-        if (key === "Enter" || key === "=") { e.preventDefault(); handleCalculatorInput("calculate", null); }
-        if (key === "Backspace") handleCalculatorInput("delete", null);
-        if (key === "Escape") handleCalculatorInput("clear", null);
+        const code = e.code;
+        
+        // Numbers and decimal point
+        if (/[0-9.]/.test(key)) {
+            handleCalculatorInput(null, key);
+            return;
+        }
+        
+        // Operators - with comprehensive key mapping including NumPad
+        const operatorMap = {
+            "+": "+",
+            "-": "-",
+            "*": "*",
+            "/": "/",
+            "%": "%",
+            "^": "^",
+            "(": "(",
+            ")": ")"
+        };
+        
+        // Check both key and code for better numpad support
+        if (operatorMap[key]) {
+            e.preventDefault();
+            handleCalculatorInput(null, operatorMap[key]);
+            return;
+        }
+        
+        // Handle numpad operators by code
+        if (code === "NumpadAdd") {
+            e.preventDefault();
+            handleCalculatorInput(null, "+");
+            return;
+        }
+        if (code === "NumpadSubtract") {
+            e.preventDefault();
+            handleCalculatorInput(null, "-");
+            return;
+        }
+        if (code === "NumpadMultiply") {
+            e.preventDefault();
+            handleCalculatorInput(null, "*");
+            return;
+        }
+        if (code === "NumpadDivide") {
+            e.preventDefault();
+            handleCalculatorInput(null, "/");
+            return;
+        }
+        if (code === "NumpadDecimal") {
+            e.preventDefault();
+            handleCalculatorInput(null, ".");
+            return;
+        }
+        
+        // Special keys
+        if (key === "Enter" || key === "=" || code === "NumpadEnter") {
+            e.preventDefault();
+            handleCalculatorInput("calculate", null);
+            return;
+        }
+        if (key === "Backspace") {
+            e.preventDefault();
+            handleCalculatorInput("delete", null);
+            return;
+        }
+        if (key === "Escape") {
+            e.preventDefault();
+            handleCalculatorInput("clear", null);
+            return;
+        }
     });
 }
 
@@ -276,6 +341,18 @@ function handleCalculatorInput(action, value) {
         // For simplicity, we just block it or implement basic string manipulation.
         showToast("Toggle sign not fully implemented in string mode", "info");
         return;
+    }
+    
+    // Normalize operator symbols to actual operators
+    if (value) {
+        const operatorMap = {
+            "×": "*",
+            "÷": "/",
+            "^": "^"
+        };
+        if (operatorMap[value]) {
+            value = operatorMap[value];
+        }
     }
     
     // Handle appending values
