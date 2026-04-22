@@ -35,7 +35,41 @@ A production-ready, full-stack web-based calculator system crafted with a premiu
 
 ---
 
-## 🚀 Local Deployment Setup
+## 🚀 Quick Start (Copy & Paste)
+
+### Prerequisites
+- Python 3.8+ installed
+- PostgreSQL installed and running
+
+### Step 1: Setup Database
+Open pgAdmin4 or `psql` console and run:
+```sql
+CREATE DATABASE calculator_db;
+```
+*(Database credentials default: `postgres:shakibalarman@localhost/calculator_db`. Edit `backend/app/database.py` if different.)*
+
+### Step 2: Start Backend (Terminal 1)
+Copy and paste the following in your terminal:
+```bash
+cd backend && python -m venv venv && .\venv\Scripts\activate && pip install -r requirements.txt && .\venv\Scripts\python -m uvicorn app.main:app --reload
+```
+
+### Step 3: Start Frontend (Terminal 2)
+Open a new terminal and copy and paste:
+```bash
+cd frontend && python -m http.server 3000
+```
+
+### Step 4: Access the Application
+Open your browser and navigate to:
+- **Calculator App**: http://localhost:3000/login.html
+- **API Documentation**: http://127.0.0.1:8000/docs
+
+That's it! 🎉
+
+---
+
+## 🛠️ Detailed Setup Instructions
 
 ### 1. Database Configuration (PostgreSQL)
 Ensure you have PostgreSQL installed. Open pgAdmin4 or the `psql` console and create a new database.
